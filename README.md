@@ -1,82 +1,171 @@
-# Customer Segmentation using K-means Clustering
+# Customer Segmentation AI Dashboard
 
-## Project Overview
-In this project, I used the **K-means Clustering** machine learning algorithm to divide a retail store's customers into different groups (segments) based on their purchasing behavior. This helps businesses better understand their customers and create tailored strategies for them.
+A Machine Learning project that uses **K-Means Clustering** to segment retail store customers based on their purchasing behavior.
 
-## Goal
-My main goal was to identify the natural customer groups within the `Mall_Customers.csv` dataset, allowing the store to optimize its marketing and sales efforts.
+The project also includes an **interactive dashboard web application** built using Flask and JavaScript where users can predict customer segments in real time.
 
-## Dataset Used
-For this project, I used the **`Mall_Customers.csv`** dataset. This dataset contains information such as customers' `Annual Income (k$)` and `Spending Score (1-100)`.
+---
 
-## Tools and Libraries Used
-* **Python**: The programming language used.
-* **Pandas**: For loading and managing data.
-* **Scikit-learn**: For the K-means clustering algorithm and data scaling.
-* **Matplotlib**: For creating plots and graphs.
-* **Seaborn**: For making attractive and informative data visualizations.
+# Project Overview
 
-## Key Steps Performed
+This project analyzes customer data from a mall dataset and divides customers into meaningful groups based on:
 
-1.  **Data Loading**: The `Mall_Customers.csv` file was loaded into a Pandas DataFrame.
-2.  **Data Preprocessing & Feature Selection**:
-    * The `Annual Income (k$)` and `Spending Score (1-100)` columns were selected for clustering.
-    * These features were standardized using `StandardScaler` to bring all features to a similar scale (mean ~ 0, standard deviation ~ 1). This is crucial for distance-based        algorithms like K-means.
-3.  **Optimal K Value Finding (Elbow Method)**:
-    * The Elbow Method was employed to find the best number of clusters (`K`) for the K-means algorithm.
-    * WCSS (Within-Cluster Sum of Squares) was calculated for different `K` values (from 1 to 10), and a graph was plotted. The "elbow" point on the graph indicates the             optimal `K` value (in this case, `K=5` was chosen).
-4.  **Applying K-means Clustering**:
-    * The `KMeans` algorithm was applied to the scaled data using the identified `optimal_k` (5 clusters).
-    * Each customer was assigned their respective cluster label (from `0` to `4`).
-    * The **centroids** (average income and spending score) for each cluster were also calculated, representing the "center" of each group.
-5.  **Visualization of Clusters**:
-    * A scatter plot was created with `Annual Income` on the X-axis and `Spending Score` on the Y-axis.
-    * Each customer is represented by a dot, and **different colors** are used to denote their assigned cluster.
-    * The **centroids** of each cluster are marked with large **red 'X's**, clearly showing the average behavior of each group.
+- Annual Income
+- Spending Score
 
-## Understanding the Output Graph
+Customer segmentation helps businesses understand their audience and create **targeted marketing strategies**.
 
-The graph provides a visual summary of your customer base:
+---
 
-* **X-axis (`Annual Income (k$)`)**: Shows the customer's annual income.
-* **Y-axis (`Spending Score (1-100)`)**: Indicates how much a customer spends at the store (higher score = more spending).
-* **Colored Dots**: Each dot is a customer. Dots of the same color belong to the same customer group.
-* **Red 'X' (Centroids)**: This is the average point for each group. It helps you understand the typical characteristics (average income and spending) of customers within       that group.
+# Tech Stack
 
-By looking at the graph, you can easily identify different customer segments, such as:
-* High Income, High Spending Customers
-* Low Income, High Spending Customers
-* High Income, Low Spending Customers
-* Low Income, Low Spending Customers
-* And customers with average income/spending.
+| Category | Technologies |
+|--------|-------------|
+| Programming Language | Python |
+| Machine Learning | Scikit-learn (K-Means Clustering) |
+| Data Processing | Pandas, NumPy |
+| Data Visualization | Matplotlib, Seaborn, Chart.js |
+| Backend | Flask |
+| Frontend | HTML, CSS, JavaScript |
+| Dashboard | Chart.js |
+| Version Control | Git & GitHub |
 
-## Real-World Applications & Benefits
+---
 
-Customer segmentation offers significant advantages for businesses:
+# Project Folder Structure
 
-* **Targeted Marketing**: Businesses can create specific marketing campaigns for each customer group. For example, exclusive offers for high-value customers, or budget-friendly discounts for price-sensitive shoppers.
-* **Personalized Product Recommendations**: Customers can receive product suggestions tailored to their preferences, leading to increased sales.
-* **Improved Customer Service**: Understanding the needs of each segment allows for better and more relevant customer support.
-* **Resource Optimization**: Focusing marketing budgets on the right segments can lead to a better ROI (Return on Investment).
-* **New Product Development**: Insights into segment needs can guide the development of new products or services.
+| Folder / File | Description |
+|---------------|-------------|
+| `backend/` | Flask backend API |
+| `frontend/` | Web dashboard UI |
+| `model/` | Saved ML model |
+| `Customer_Segmentation.ipynb` | Jupyter notebook for ML model development |
+| `Mall_Customers.csv` | Dataset used for clustering |
+| `README.md` | Project documentation |
 
-## How to Run the Code
+### Detailed Structure
+```
+Customer_Segmentation
+│
+├── backend
+│ └── app.py
+│
+├── frontend
+│ ├── index.html
+│ ├── style.css
+│ └── script.js
+│
+├── model
+│ └── kmeans_model.pkl
+│
+├── Customer_Segmentation.ipynb
+├── Mall_Customers.csv
+└── README.md
+---
+```
 
-1.  **Clone this repository:**
-    ```bash
-    git clone [Your_GitHub_Repo_URL_Here]
-    cd [Your_Repo_Name]
-    ```
-2.  **Install the required libraries:**
-    ```bash
-    pip install pandas scikit-learn matplotlib seaborn
-    ```
-3.  **Download the dataset:**
-    * Make sure the `Mall_Customers.csv` file is in the same directory as your Python script.
-4.  **Run the Python script:**
-    ```bash
-    python your_script_name.py
-    ```
-    (Replace `your_script_name.py` with the actual name of your Python file, e.g., `kmeans_segmentation.py`)
+# Dataset Information
 
-This will execute the clustering algorithm and display the Elbow Method graph followed by the final customer segmentation plot.
+The dataset used in this project is **Mall_Customers.csv**.
+```
+| Feature | Description |
+|-------|-------------|
+| CustomerID | Unique ID of the customer |
+| Gender | Male or Female |
+| Age | Customer age |
+| Annual Income (k$) | Customer income |
+| Spending Score (1-100) | Spending behavior score |
+
+For clustering, we selected:
+
+- **Annual Income (k$)**
+- **Spending Score (1-100)**
+
+---
+```
+# Machine Learning Workflow
+```
+| Step | Description |
+|-----|-------------|
+| Data Loading | Dataset loaded using Pandas |
+| Feature Selection | Selected Income & Spending Score |
+| Feature Scaling | StandardScaler used |
+| Finding Optimal K | Elbow Method |
+| Model Training | K-Means clustering applied |
+| Cluster Assignment | Customers assigned cluster labels |
+| Visualization | Scatter plot used to visualize clusters |
+
+---
+```
+# Customer Segments Identified
+```
+The algorithm identified **5 customer segments**:
+
+| Cluster | Customer Type |
+|------|----------------|
+| Cluster 0 | Low Income – Low Spending |
+| Cluster 1 | Low Income – High Spending |
+| Cluster 2 | Average Customers |
+| Cluster 3 | High Income – Low Spending |
+| Cluster 4 | High Income – High Spending |
+
+---
+```
+# Web Dashboard Features
+
+The project also includes an **interactive AI dashboard**.
+```
+| Feature | Description |
+|-------|-------------|
+| Prediction Panel | Enter customer income & spending score |
+| Real-time Prediction | Predict customer cluster |
+| Cluster Visualization | Scatter graph showing clusters |
+| ML API | Flask backend serving predictions |
+| Interactive UI | Responsive dashboard layout |
+
+---
+```
+# How To Run The Project
+
+### 1 Clone Repository
+
+```bash
+git clone https://github.com/ravicoder01/Customer_Segmentation.git
+cd Customer_Segmentation
+2 Install Required Libraries
+pip install pandas numpy scikit-learn flask flask-cors matplotlib seaborn
+3 Run Backend Server
+cd backend
+python app.py
+
+Server will start at:
+
+http://127.0.0.1:5000
+4 Run Frontend
+
+Open the frontend using Live Server or open:
+
+frontend/index.html
+
+in the browser.
+
+Real World Applications
+
+Customer segmentation helps businesses:
+
+Application	Benefit
+Targeted Marketing	Personalized campaigns
+Customer Insights	Understand customer behavior
+Product Recommendations	Suggest relevant products
+Marketing Optimization	Better ROI
+Business Strategy	Data-driven decisions
+Future Improvements
+Deploy dashboard online
+Add real-time analytics
+Add customer demographic segmentation
+Improve visualization with Plotly
+Author
+
+Ravi
+
+B.Tech Student | Machine Learning Enthusiast

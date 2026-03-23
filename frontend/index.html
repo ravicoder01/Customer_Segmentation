@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Customer Segmentation AI Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Customer Segmentation AI Dashboard</h1>
+
+<p class="subtitle">Predict which customer cluster a user belongs to</p>
+
+<div class="dashboard">
+
+<div class="card">
+
+<h2>Prediction Panel</h2>
+
+<input id="income" placeholder="Annual Income (k$)">
+
+<input id="score" placeholder="Spending Score (1-100)">
+
+<button onclick="predict()">Predict Cluster</button>
+
+<h3 id="result"></h3>
+
+</div>
+
+<div class="chart-box">
+
+<h2>Customer Cluster Visualization</h2>
+
+<canvas id="clusterChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

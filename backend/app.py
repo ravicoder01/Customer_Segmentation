@@ -1,0 +1,54 @@
+from flask_cors import CORS
+from flask import Flask, request, jsonify
+import pickle
+import numpy as np
+
+app = Flask(__name__)
+CORS(app)
+
+model = pickle.load(open("../kmeans_model.pkl","rb"))
+
+@app.route("/")
+def home():
+    return "Backend is working"
+
+@app.route("/predict", methods=["POST"])
+def predict():
+
+    data = request.json
+
+    income = float(data["income"])
+    score = float(data["score"])
+
+    features = np.array([[income, score]])
+
+    prediction = model.predict(features)
+
+    return jsonify({
+        "cluster": int(prediction[0])
+    })
+@app.route("/clusters")
+def clusters():
+
+    import pandas as pd
+
+    df = pd.read_csv("../Mall_Customers.csv")
+
+    X = df[['Annual Income (k$)','Spending Score (1-100)']]
+
+    labels = model.predict(X)
+
+    points = []
+
+    for i in range(len(X)):
+
+        points.append({
+            "x": float(X.iloc[i,0]),
+            "y": float(X.iloc[i,1]),
+            "cluster": int(labels[i])
+        })
+
+    return jsonify(points)
+
+if __name__ == "__main__":
+    app.run(debug=True)
