@@ -34,14 +34,14 @@ Customer segmentation helps businesses understand their audience and create **ta
 
 # Project Folder Structure
 
-| Folder / File | Description |
-|---------------|-------------|
-| `backend/` | Flask backend API |
-| `frontend/` | Web dashboard UI |
-| `model/` | Saved ML model |
+|    Folder / File              |      Description 
+|-------------------------------|-----------------------|
+| `backend/`                    | Flask backend API |
+| `frontend/`                   | Web dashboard UI |
+| `model/`                      | Saved ML model |
 | `Customer_Segmentation.ipynb` | Jupyter notebook for ML model development |
-| `Mall_Customers.csv` | Dataset used for clustering |
-| `README.md` | Project documentation |
+| `Mall_Customers.csv`          | Dataset used for clustering |
+| `README.md`                   | Project documentation |
 
 ### Detailed Structure
 ```
@@ -68,12 +68,12 @@ Customer_Segmentation
 
 The dataset used in this project is **Mall_Customers.csv**.
 ```
-| Feature | Description |
-|-------|-------------|
-| CustomerID | Unique ID of the customer |
-| Gender | Male or Female |
-| Age | Customer age |
-| Annual Income (k$) | Customer income |
+|     Feature            |       Description 
+|------------------------|-------------------------|
+| CustomerID             | Unique ID of the customer |
+| Gender                 | Male or Female |
+| Age                    | Customer age |
+| Annual Income (k$)     | Customer income |
 | Spending Score (1-100) | Spending behavior score |
 
 For clustering, we selected:
@@ -101,8 +101,8 @@ For clustering, we selected:
 ```
 The algorithm identified **5 customer segments**:
 
-| Cluster | Customer Type |
-|------|----------------|
+| Cluster   | Customer Type  |
+|-----------|----------------|
 | Cluster 0 | Low Income – Low Spending |
 | Cluster 1 | Low Income – High Spending |
 | Cluster 2 | Average Customers |
@@ -115,13 +115,13 @@ The algorithm identified **5 customer segments**:
 
 The project also includes an **interactive AI dashboard**.
 ```
-| Feature | Description |
-|-------|-------------|
-| Prediction Panel | Enter customer income & spending score |
-| Real-time Prediction | Predict customer cluster |
+|       Feature         |     Description |
+|-----------------------|-----------------|
+| Prediction Panel      | Enter customer income & spending score |
+| Real-time Prediction  | Predict customer cluster |
 | Cluster Visualization | Scatter graph showing clusters |
-| ML API | Flask backend serving predictions |
-| Interactive UI | Responsive dashboard layout |
+| ML API                | Flask backend serving predictions |
+| Interactive UI        | Responsive dashboard layout |
 
 ---
 ```
