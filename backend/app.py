@@ -3,8 +3,9 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 import os
+from flask import Flask, request, jasonify,send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../frontend")
 CORS(app)
 
 model_path= os.path.join(os.path.dirname(__file__), "../kmeans_model.pkl")
@@ -12,7 +13,7 @@ model = pickle.load(open(model_path,"rb"))
 
 @app.route("/")
 def home():
-    return "Backend is working"
+    return send_from_directory(app.static_folder,"index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict():
