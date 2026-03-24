@@ -1,9 +1,8 @@
 from flask_cors import CORS
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,send_from_directory
 import pickle
 import numpy as np
 import os
-from flask import Flask, request, jasonify,send_from_directory
 
 app = Flask(__name__, static_folder="../frontend")
 CORS(app)
