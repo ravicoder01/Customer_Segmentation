@@ -44,11 +44,40 @@ datasets: [
 
 options:{
 
-scales:{
-x:{title:{display:true,text:"Annual Income"}},
-y:{title:{display:true,text:"Spending Score"}}
-}
+animation:{
+duration:1500
+},
 
+plugins:{
+legend:{
+position:"top"
+},
+tooltip:{
+enabled:true
+}
+},
+
+scales:{
+x:{
+title:{
+display:true,
+text:"Annual Income (k$)"
+},
+grid:{
+color:"#e5e5e5"    
+}
+},
+
+y:{
+title:{
+display:true,
+text:"Spending Score (1-100)"
+},
+grid:{
+color:"#e5e5e5"    
+}
+}
+}
 }
 
 })
@@ -98,7 +127,9 @@ chart.data.datasets.push({
 label:"Prediction",
 data:[{x:Number(income),y:Number(score)}],
 backgroundColor:"yellow",
-pointRadius:10
+borderColor:"black",
+borderWidth:2,
+pointRadius:12
 
 })
 
