@@ -59,6 +59,11 @@ y:{title:{display:true,text:"Spending Score"}}
 
 function predict(){
 
+if(!chart){
+alert("Chart still loading, please wait")
+return
+}    
+
 let income = document.getElementById("income").value
 let score = document.getElementById("score").value
 
