@@ -51,10 +51,8 @@ Customer_Segmentation
 │ └── app.py
 │
 ├── frontend
-│ ├── index.html
-│ ├── style.css
-│ └── script.js
-│
+│  |___ index.html
+|
 ├── model
 │ └── kmeans_model.pkl
 │
@@ -85,15 +83,15 @@ For clustering, we selected:
 ```
 # Machine Learning Workflow
 ```
-| Step | Description |
-|-----|-------------|
-| Data Loading | Dataset loaded using Pandas |
-| Feature Selection | Selected Income & Spending Score |
-| Feature Scaling | StandardScaler used |
-| Finding Optimal K | Elbow Method |
-| Model Training | K-Means clustering applied |
-| Cluster Assignment | Customers assigned cluster labels |
-| Visualization | Scatter plot used to visualize clusters |
+| Step              |           Description 
+|-------------------|-----------------------------------------|
+| Data Loading      | Dataset loaded using Pandas             |
+| Feature Selection | Selected Income & Spending Score        |
+| Feature Scaling   | StandardScaler used                     |
+| Finding Optimal K | Elbow Method                            |
+| Model Training    | K-Means clustering applied              |
+| Cluster Assignment| Customers assigned cluster labels       |
+| Visualization     | Scatter plot used to visualize clusters |
 
 ---
 ```
