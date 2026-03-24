@@ -44,6 +44,7 @@ Customer_Segmentation/
 ├── backend/
 │   └── app.py                        # Flask backend API
 │
+<<<<<<< HEAD
 ├── frontend/
 │   └── index.html                    # Web dashboard UI
 │
@@ -54,6 +55,17 @@ Customer_Segmentation/
 └── README.md                         # Project documentation
 ```
 
+=======
+├── frontend
+│  |___ index.html
+|
+├── model
+│ └── kmeans_model.pkl
+│
+├── Customer_Segmentation.ipynb
+├── Mall_Customers.csv
+└── README.md
+>>>>>>> 39ed181cd404b71670a0f38f022babffbed8a34b
 ---
 
 ## Dataset Information
@@ -90,6 +102,18 @@ For clustering, we selected:
 | Cluster Assignment | Customers assigned cluster labels        |
 | Visualization      | Scatter plot used to visualize clusters  |
 ```
+<<<<<<< HEAD
+=======
+| Step              |           Description 
+|-------------------|-----------------------------------------|
+| Data Loading      | Dataset loaded using Pandas             |
+| Feature Selection | Selected Income & Spending Score        |
+| Feature Scaling   | StandardScaler used                     |
+| Finding Optimal K | Elbow Method                            |
+| Model Training    | K-Means clustering applied              |
+| Cluster Assignment| Customers assigned cluster labels       |
+| Visualization     | Scatter plot used to visualize clusters |
+>>>>>>> 39ed181cd404b71670a0f38f022babffbed8a34b
 
 ---
 
