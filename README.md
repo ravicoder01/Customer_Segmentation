@@ -19,16 +19,16 @@ Customer segmentation helps businesses understand their audience and create **ta
 
 # Tech Stack
 
-| Category | Technologies |
-|--------|-------------|
-| Programming Language | Python |
-| Machine Learning | Scikit-learn (K-Means Clustering) |
-| Data Processing | Pandas, NumPy |
-| Data Visualization | Matplotlib, Seaborn, Chart.js |
-| Backend | Flask |
-| Frontend | HTML, CSS, JavaScript |
-| Dashboard | Chart.js |
-| Version Control | Git & GitHub |
+|      Category        |     Technologies 
+|----------------------|----------------------------------|
+| Programming Language |     Python                       |
+| Machine Learning     | Scikit-learn (K-Means Clustering)|
+| Data Processing      | Pandas, NumPy                    |
+| Data Visualization   | Matplotlib, Seaborn, Chart.js    |
+| Backend              | Flask                            |
+| Frontend             | HTML, CSS, JavaScript            |
+| Dashboard            | Chart.js                         |
+| Version Control      | Git & GitHub                     |
 
 ---
 
