@@ -1,6 +1,6 @@
 let chart;
 
-fetch("http://127.0.0.1:5000/clusters")
+fetch("/clusters")
 
 .then(res => res.json())
 
@@ -96,7 +96,7 @@ return
 let income = document.getElementById("income").value
 let score = document.getElementById("score").value
 
-fetch("http://127.0.0.1:5000/predict",{
+fetch("/predict",{
 
 method:"POST",
 
