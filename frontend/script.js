@@ -22,7 +22,7 @@ if(p.cluster == 4) cluster4.push({x:p.x,y:p.y})
 
 })
 
-const ctx = document.getElementById("clusterChart")
+const ctx = document.getElementById("clusterChart").getContext("2d")
 
 chart = new Chart(ctx, {
 

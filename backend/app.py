@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 import os
 
-app = Flask(__name__, static_folder="../frontend")
+app = Flask(__name__, static_folder="../frontend", static_url_path="")
 CORS(app)
 
 model_path= os.path.join(os.path.dirname(__file__), "../kmeans_model.pkl")
@@ -34,7 +34,8 @@ def clusters():
 
     import pandas as pd
 
-    df = pd.read_csv("../Mall_Customers.csv")
+    csv_path= os.path.join(os.path.dirname(__file__), "../Mall_customers.csv")
+    df = pd.read_csv(csv_path)
 
     X = df[['Annual Income (k$)','Spending Score (1-100)']]
 
