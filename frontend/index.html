@@ -1,54 +1,282 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Segmentation AI Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<title>Customer Segmentation AI Dashboard</title>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      padding: 40px 20px;
+    }
 
-<link rel="stylesheet" href="style.css">
+    .container {
+      text-align: center;
+      color: white;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    h1 {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
 
+    .subtitle {
+      opacity: 0.85;
+      margin-bottom: 40px;
+      font-size: 1rem;
+    }
+
+    .dashboard {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      color: #333;
+      text-align: left;
+    }
+
+    .card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      color: #222;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    input:focus { border-color: #4facfe; }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #4facfe, #00c6ff);
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    #result {
+      margin-top: 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+      min-height: 24px;
+    }
+
+    #error-msg {
+      color: red;
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 8px;
+      min-height: 18px;
+    }
+
+    .chart-box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 560px;
+      max-width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      color: #333;
+    }
+
+    .chart-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      color: #222;
+    }
+
+    #loading {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      padding: 60px 0;
+    }
+
+    canvas { max-width: 100%; }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
+  <h1>Customer Segmentation AI Dashboard</h1>
+  <p class="subtitle">Predict which customer cluster a user belongs to</p>
 
-<h1>Customer Segmentation AI Dashboard</h1>
+  <div class="dashboard">
 
-<p class="subtitle">Predict which customer cluster a user belongs to</p>
+    <!-- Prediction Panel -->
+    <div class="card">
+      <h2>Prediction Panel</h2>
+      <input id="income" type="number" placeholder="Annual Income (k$)" min="0" max="200"/>
+      <input id="score"  type="number" placeholder="Spending Score (1-100)" min="1" max="100"/>
+      <button onclick="predict()">Predict Cluster</button>
+      <h3 id="result"></h3>
+      <p id="error-msg"></p>
+    </div>
 
-<div class="dashboard">
+    <!-- Chart Box -->
+    <div class="chart-box">
+      <h2>Customer Cluster Visualization</h2>
+      <div id="loading">Loading cluster data...</div>
+      <canvas id="clusterChart" style="display:none;"></canvas>
+    </div>
 
-<div class="card">
-
-<h2>Prediction Panel</h2>
-
-<input id="income" placeholder="Annual Income (k$)">
-
-<input id="score" placeholder="Spending Score (1-100)">
-
-<button onclick="predict()">Predict Cluster</button>
-
-<h3 id="result"></h3>
-
+  </div>
 </div>
 
-<div class="chart-box">
+<script>
+  // ✅ AUTO-DETECT BASE URL — works locally AND on Render
+  const BASE_URL = window.location.origin;
 
-<h2>Customer Cluster Visualization</h2>
+  let chart = null;
+  let chartReady = false;
 
-<canvas id="clusterChart"></canvas>
+  // ─── Load cluster data ───────────────────────────────────────────
+  fetch(BASE_URL + "/clusters")
+    .then(res => {
+      if (!res.ok) throw new Error("Server error: " + res.status);
+      return res.json();
+    })
+    .then(data => {
+      const clusters = [[], [], [], [], []];
 
-</div>
+      data.forEach(p => {
+        const idx = p.cluster;
+        if (idx >= 0 && idx <= 4) clusters[idx].push({ x: p.x, y: p.y });
+      });
 
-</div>
+      const colors = ["red", "blue", "green", "purple", "orange"];
+      const labels = ["Cluster 0","Cluster 1","Cluster 2","Cluster 3","Cluster 4"];
 
-</div>
+      const datasets = clusters.map((pts, i) => ({
+        label: labels[i],
+        data: pts,
+        backgroundColor: colors[i],
+        pointRadius: 5
+      }));
 
-<script src="script.js"></script>
+      document.getElementById("loading").style.display = "none";
+      const canvas = document.getElementById("clusterChart");
+      canvas.style.display = "block";
+
+      const ctx = canvas.getContext("2d");
+      chart = new Chart(ctx, {
+        type: "scatter",
+        data: { datasets },
+        options: {
+          animation: { duration: 1500 },
+          plugins: {
+            legend: { position: "top" },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: "Annual Income (k$)" },
+              grid: { color: "#e5e5e5" }
+            },
+            y: {
+              title: { display: true, text: "Spending Score (1-100)" },
+              grid: { color: "#e5e5e5" }
+            }
+          }
+        }
+      });
+
+      chartReady = true;
+    })
+    .catch(err => {
+      document.getElementById("loading").innerHTML =
+        "⚠️ Could not load cluster data. Check if backend is running.<br><small>" + err.message + "</small>";
+    });
+
+  // ─── Predict ────────────────────────────────────────────────────
+  function predict() {
+    const errEl = document.getElementById("error-msg");
+    const resultEl = document.getElementById("result");
+    errEl.textContent = "";
+    resultEl.textContent = "";
+
+    if (!chartReady) {
+      errEl.textContent = "Chart still loading, please wait...";
+      return;
+    }
+
+    const income = document.getElementById("income").value.trim();
+    const score  = document.getElementById("score").value.trim();
+
+    if (!income || !score) {
+      errEl.textContent = "Please enter both Annual Income and Spending Score.";
+      return;
+    }
+
+    fetch(BASE_URL + "/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ income, score })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Server error: " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        const cluster = data.cluster;
+        resultEl.textContent = "Customer belongs to cluster : " + cluster;
+
+        // Remove old prediction point if any
+        chart.data.datasets = chart.data.datasets.filter(d => d.label !== "Prediction");
+
+        // Add new prediction point
+        chart.data.datasets.push({
+          label: "Prediction",
+          data: [{ x: Number(income), y: Number(score) }],
+          backgroundColor: "yellow",
+          borderColor: "black",
+          borderWidth: 2,
+          pointRadius: 12
+        });
+
+        chart.update();
+      })
+      .catch(err => {
+        errEl.textContent = "Prediction failed: " + err.message;
+      });
+  }
+</script>
 
 </body>
-
 </html>
