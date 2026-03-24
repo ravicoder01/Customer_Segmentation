@@ -2,11 +2,14 @@ from flask_cors import CORS
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
+import os
+import pickle
 
 app = Flask(__name__)
 CORS(app)
 
-model = pickle.load(open("../kmeans_model.pkl","rb"))
+model_path= os.path.join(os.path.dirname(__file__), "../kmeans_model.pkl")
+model = pickle.load(open(model_path,"rb"))
 
 @app.route("/")
 def home():
